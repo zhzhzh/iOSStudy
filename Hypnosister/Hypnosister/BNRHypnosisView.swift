@@ -38,8 +38,20 @@ class BNRHypnosisView: UIView {
         
         path.stroke();
         
-        let image = UIImage.init(named:"logo")
-        image?.draw(in: rect)
+        if let currentContext = UIGraphicsGetCurrentContext() {
+        
+            currentContext.saveGState();
+            currentContext.setShadow(offset: CGSize(width:4 ,height: 7), blur:3)
+        
+        
+            let image = UIImage.init(named:"logo")
+            image?.draw(in: rect)
+            
+            currentContext.restoreGState();
+        }
+        
+
+        
     }
     
     override init(frame: CGRect) {
