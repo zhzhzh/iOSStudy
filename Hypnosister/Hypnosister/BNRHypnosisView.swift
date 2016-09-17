@@ -38,14 +38,48 @@ class BNRHypnosisView: UIView {
         
         path.stroke();
         
-        if let currentContext = UIGraphicsGetCurrentContext() {
+        let margin:CGFloat = 60
+        let imageRect = CGRect(x: margin, y: margin*2, width: bounds.size.width - margin*2, height: bounds.size.height - margin*4);
         
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            //渐变
+            currentContext.saveGState();
+            
+            let myPath = UIBezierPath()
+            
+            let p1 = CGPoint(x: imageRect.origin.x + imageRect.size.width/2, y: imageRect.origin.y)
+            myPath.move(to: p1)
+            let p2 = CGPoint(x:imageRect.origin.x, y: imageRect.origin.y + imageRect.size.height);
+            myPath.addLine(to: p2);
+            let p3 = CGPoint(x:imageRect.origin.x + imageRect.size.width, y: imageRect.origin.y + imageRect.size.height);
+            myPath.addLine(to: p3);
+            myPath.addLine(to: p1);
+            
+            myPath.addClip();
+            
+            
+            let location: [CGFloat] = [ 0.0, 1.0 ];
+            let components: [CGFloat] = [ 0.0, 1.0, 0.0, 1.0,
+                                          1.0, 1.0, 0.0, 1.0 ];
+            
+            let colorspace = CGColorSpaceCreateDeviceRGB();
+            let gradient = CGGradient(colorSpace: colorspace,colorComponents: components, locations: location, count: 2);
+            let startPoint = CGPoint(x: imageRect.origin.x, y: imageRect.origin.y);
+            let endPoint = CGPoint(x: imageRect.origin.x + imageRect.size.width, y: imageRect.origin.y + imageRect.size.height);
+            currentContext.drawLinearGradient(gradient!, start: startPoint, end: endPoint, options: CGGradientDrawingOptions(rawValue: 0));
+            
+            currentContext.restoreGState();
+            
+            //阴影
             currentContext.saveGState();
             currentContext.setShadow(offset: CGSize(width:4 ,height: 7), blur:3)
-        
-        
             let image = UIImage.init(named:"logo")
-            image?.draw(in: rect)
+            image?.draw(in: imageRect)
+            
+            
+            
+            
+            
             
             currentContext.restoreGState();
         }
