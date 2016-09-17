@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerLabel: UILabel!
     
     var questionIndex: Int = 0
-    var questionArray:[String] = []
-    var answerArray:[String] = []
+    var questionArray: [String] = []
+    var answerArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
