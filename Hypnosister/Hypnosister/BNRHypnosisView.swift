@@ -76,11 +76,6 @@ class BNRHypnosisView: UIView {
             let image = UIImage.init(named:"logo")
             image?.draw(in: imageRect)
             
-            
-            
-            
-            
-            
             currentContext.restoreGState();
         }
         
